@@ -1,0 +1,40 @@
+--- bdist_msi.py	2012-08-28 10:24:11.839464900 +0100
++++ bdist_msi-fixed.py	2012-08-28 14:31:18.698904400 +0100
+@@ -378,15 +378,36 @@
+ 
+     def add_scripts(self):
+         if self.install_script:
++            # install
+             start = 6800
+             for ver in self.versions + [self.other_version]:
+                 install_action = "install_script." + ver
+                 exe_prop = "PYTHON" + ver
++
++                install_key = self.install_script_key + ' -install'
+                 add_data(self.db, "CustomAction",
+-                        [(install_action, 50, exe_prop, self.install_script_key)])
++                        [(install_action, 50, exe_prop, install_key)])
+                 add_data(self.db, "InstallExecuteSequence",
+                         [(install_action, "&Python%s=3" % ver, start)])
+                 start += 1
++
++            # uninstall:
++            # http://msdn.microsoft.com/en-us/library/windows/desktop/aa368013%28v=vs.85%29.aspx
++            # "If the action is sequenced after the InstallValidate action in the 
++            # InstallExecuteSequence table, the package author may specify a condition 
++            # of REMOVE="ALL" for the action in the Condition column
++            start = 1401
++            uninstall_key = self.install_script_key + ' -remove'
++            for ver in self.versions + [self.other_version]:
++                uninstall_action = "uninstall_script." + ver
++                exe_prop = "PYTHON" + ver 
++                add_data(self.db, "CustomAction",
++                        [(uninstall_action, 50, exe_prop, uninstall_key)])
++                add_data(self.db, "InstallExecuteSequence",
++                        [(uninstall_action, '!Python%s=3 And REMOVE="ALL"' % ver, start)])
++                start += 1
++            
++
+         # XXX pre-install scripts are currently refused in finalize_options()
+         #     but if this feature is completed, it will also need to add
+         #     entries for each version as the above code does

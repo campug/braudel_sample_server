@@ -1,0 +1,12 @@
+setup.cfg
+setup.py
+sample_service/__init__.py
+sample_service/rpc.py
+sample_service.egg-info/PKG-INFO
+sample_service.egg-info/SOURCES.txt
+sample_service.egg-info/dependency_links.txt
+sample_service.egg-info/entry_points.txt
+sample_service.egg-info/not-zip-safe
+sample_service.egg-info/requires.txt
+sample_service.egg-info/top_level.txt
+scripts/proclist_service.py

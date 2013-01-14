@@ -1,0 +1,10 @@
+Metadata-Version: 1.0
+Name: sample-service
+Version: 0.0
+Summary: Sample Win32 Service
+Home-page: http://codelab.ferrarihaines.com
+Author: B Maqueira
+Author-email: braudel@ferrarihaines.com
+License: UNKNOWN
+Description: Sample package to deploy a twisted-xmlrpc server as a win32 service
+Platform: UNKNOWN
